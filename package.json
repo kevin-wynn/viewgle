@@ -1,0 +1,28 @@
+{
+  "name": "viewgle",
+  "version": "1.0.0",
+  "description": "A small analytics platform for express and mongo",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevin-wynn/viewgle.git"
+  },
+  "keywords": [
+    "anayltics",
+    "express",
+    "mongo",
+    "node"
+  ],
+  "author": "Kevin Wynn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevin-wynn/viewgle/issues"
+  },
+  "homepage": "https://github.com/kevin-wynn/viewgle#readme"
+}
