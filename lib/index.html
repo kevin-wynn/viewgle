@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Viewgle Analytics</title>
+  <style>
+    /* styles */
+  </style>
+</head>
+<body>
+  <h1>Viewgle Analytics</h1>
+  <canvas id="pageViewsOverTime" width="400" height="400"></canvas>
+</body>
+<script>
+  // script
+
+  // get all data back for default time frame
+fetch('/viewgle/getAllEntries')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(results) {
+    console.log(results);
+  });  
+
+
+  // apply data to content
+</script>
+</html>
