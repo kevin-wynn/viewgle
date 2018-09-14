@@ -7,25 +7,116 @@
   <title>Viewgle Analytics</title>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/taucharts@2/dist/taucharts.min.css">
   <style>
-    /* styles */
+    * { padding: 0; margin: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; font-weight: 100;}
+
+    .header {
+      color: #fff;
+      background: #2e3131;
+      width: 100%;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+
+    .toolbar {
+      width: 100%;
+      padding: 10px;
+      background: #2574a9;
+      position: relative;
+      text-align: center;
+      color: #fff;
+    }
+
+    .toolbar a {
+      color: #fff;
+      border-radius: 0;
+      margin: 10px;
+      cursor: pointer;
+      transition: .2s ease all;
+    }
+
+    .toolbar a:hover {
+      color: #ececec;
+    }
+
+    .toolbar a.active {
+      text-decoration: underline;
+    }
+
     #pageViewsOverTime {
       width: 100%;
       height: 400px;
     }
+
+    .table {
+      margin-top: 25px;
+      height: 400px;
+      overflow-y: auto;
+    }
+
+    .table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table table tbody tr {
+      transition: .2s ease all;
+    }
+
+    .table table tbody tr:hover {
+      background: #ececec;
+    }
+
+    .table table tbody tr td {
+      padding: 15px;
+    }
+
+    .table table thead td {
+      background: #ececec;
+      padding: 15px;
+    }
   </style>
 </head>
 <body>
-  <h1>Viewgle Analytics</h1>
-  <button onClick=updateChart(state.month)>Month</button>
-  <button onClick=updateChart(state.week)>Week</button>
-  <div id="pageViewsOverTime"></div>
+  <div class="header">
+    <h1>Viewgle Analytics</h1>
+  </div>
+  <div class="toolbar">
+    <a class="active" onClick='updateChart(event, state.week)'>WEEK</a>
+    <a onClick='updateChart(event, state.month)'>MONTH</a>
+  </div>
+  <div class="content">
+    <div class="chart">
+        <div id="pageViewsOverTime"></div>
+      </div>
+      <div class="table">
+        <table>
+          <thead>
+            <tr>
+              <td>Date</td>
+              <td>IP</td>
+              <td>Method</td>
+              <td>Url</td>
+            </tr>
+          </thead>
+          <tbody id="viewsOverTimeTable">
+    
+          </tbody>
+        </table>
+      </div>
+  </div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/d3@4.13.0/build/d3.min.js" charset="utf-8"></script>
 <script src="https://cdn.jsdelivr.net/npm/taucharts@2/dist/taucharts.min.js" type="text/javascript"></script>
 <script>
-  // script
-
   var state = {
+    allEntries: [{
+      date: '',
+      ip: '',
+      method: '',
+      params: {},
+      url: ''
+    }],
     week: [{
       date: '',
       hit: ''
@@ -37,31 +128,57 @@
     chart: ''
   }
 
-  // get all data back for default time frame
 fetch('/viewgle/getAllEntries')
   .then(function(response) {
     return response.json()
   })
   .then(function(results) {
+    state.allEntries = results.allEntries
     state.week = results.week
     state.month = results.month
 
     chart = new Taucharts.Chart({
-        data: state.week,
-        type: 'bar',
-        x: 'date',
-        y: 'hit'
+            data: state.week,
+            type: 'bar',
+            x: 'date',
+            y: 'hit',
+            plugins: [
+              Taucharts.api.plugins.get('tooltip')({
+                fields: ['date', 'hit'],
+                formatters: {
+                  date: {
+                    label: 'Date'
+                  },
+                  hit: {
+                    label: 'Hits'
+                  }
+                }
+              })
+            ]
     })
 
     renderChart()
+    createTable()
   })
 
-// apply data to content
+function createTable() {
+  var table = []
+  for(var i = 0; i < state.allEntries.length; i++) {
+    var ent = state.allEntries[i]
+    var string = '<tr><td>'+ent.date+'</td><td>'+ent.ip+'</td><td>'+ent.method+'</td><td>'+ent.url+'</td></tr>';
+    table.push(string)
+  }
+  document.getElementById("viewsOverTimeTable").innerHTML = table.join(" ");
+}
+
 function renderChart() {
   chart.renderTo('#pageViewsOverTime')
 }
 
-function updateChart(chartData) {
+function updateChart(e, chartData) {
+  var activeClasses = document.getElementsByClassName('active')
+  for(var i = 0; i < activeClasses.length; i++) { activeClasses[i].classList.remove('active')}
+  e.target.classList.add('active')
   chart.setData(chartData)
 }
 </script>

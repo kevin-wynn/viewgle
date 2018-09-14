@@ -3,17 +3,12 @@ A small analytics platform for express and mongo
 
 ## Usage
 In your express `app.js` or `index.js` file you need to:
-1. `setDatabase()` with your connection string
-2. Tell express to use `viewgle` with the `/viewgle` route in place, this will be your admin interface
-3. Create a catch all endpoint `*` and `collectAndStoreData()` with the request and next function in express
+1. Tell your express app to use the viewgle router - this will create a catch all for collecting data across all urls in your app, this will also create a `/viewgle` route to view your analytics `TODO: Add option for urls to skip, also add login functionality`
+2. Tell viewgle to use your database connection string to connect to your mongodb. Viewgle will create an `analytics` table in your mongodb to store its data
 
 ``` javascript
-// set the database with your connection string
-viewgle.setDatabase(connectString)
-
-// put the /viewgle route above the catch all so you dont track hits to your own analytics page
-app.use('/viewgle', viewgle.router)
-
-// create a catch all for all your routes
-app.get('*', (req, res, next) => viewgle.collectAndStoreData(req, next))
+app.use(viewgle.router)
+app.use(viewgle.define({
+  dbConnect: connectString
+}))
 ```
