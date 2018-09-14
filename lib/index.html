@@ -9,6 +9,10 @@
   <style>
     * { padding: 0; margin: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; font-weight: 100;}
 
+    .content {
+      padding: 25px;
+    }
+
     .header {
       color: #fff;
       background: #2e3131;
@@ -57,17 +61,19 @@
     .table table {
       width: 100%;
       border-collapse: collapse;
+      border: 1px solid #ececec;
     }
     .table table tbody tr {
       transition: .2s ease all;
     }
 
     .table table tbody tr:hover {
-      background: #ececec;
+      background: rgba(37, 116, 169, .15);
     }
 
     .table table tbody tr td {
       padding: 15px;
+      border-bottom: 1px solid #ececec;
     }
 
     .table table thead td {
@@ -93,6 +99,7 @@
           <thead>
             <tr>
               <td>Date</td>
+              <td>Time</td>
               <td>IP</td>
               <td>Method</td>
               <td>Url</td>
@@ -165,7 +172,12 @@ function createTable() {
   var table = []
   for(var i = 0; i < state.allEntries.length; i++) {
     var ent = state.allEntries[i]
-    var string = '<tr><td>'+ent.date+'</td><td>'+ent.ip+'</td><td>'+ent.method+'</td><td>'+ent.url+'</td></tr>';
+    var date = new Date(ent.date)
+    var formatDate = (date.getMonth()+1) + '-' + date.getDate()  + '-' + date.getFullYear()
+    var hours = ((date.getHours()+11) % 12 +1)
+    var suffix = hours >= 12 ? 'AM':'PM'
+    var time = hours + ':' + (date.getMinutes()+1) + ':' + (date.getSeconds()+1) + ' ' + suffix
+    var string = '<tr><td>'+formatDate+'</td><td>'+time+'</td><td>'+ent.ip+'</td><td>'+ent.method+'</td><td>'+ent.url+'</td></tr>';
     table.push(string)
   }
   document.getElementById("viewsOverTimeTable").innerHTML = table.join(" ");
