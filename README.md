@@ -16,7 +16,7 @@ app.use(viewgle.define({
 }))
 ```
 
-## Availbe options:
+## Available options:
 
 | Option          | Type      | Description                                                  |
 |-----------------|-----------|--------------------------------------------------------------|
