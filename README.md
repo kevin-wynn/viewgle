@@ -7,8 +7,18 @@ In your express `app.js` or `index.js` file you need to:
 2. Tell viewgle to use your database connection string to connect to your mongodb. Viewgle will create an `analytics` table in your mongodb to store its data
 
 ``` javascript
+// use the viewgle router
 app.use(viewgle.router)
+
+// set up viewgle options
 app.use(viewgle.define({
-  dbConnect: connectString
+  opts
 }))
 ```
+
+## Availbe options:
+
+| Option        | Type          | Description                                           |
+| ------------- |:-------------:| -----------------------------------------------------:|
+| dbConnect     | String        | The string value for your mongodb database connection |
+| skipLocalhost | Boolean       | Boolean for skipping logging of localhost url or not  |
