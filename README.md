@@ -18,7 +18,8 @@ app.use(viewgle.define({
 
 ## Availbe options:
 
-| Option          | Type      | Description                                           |
-|-----------------|-----------|-------------------------------------------------------|
-| `dbConnect`     | `String`  | The string value for your mongodb database connection |
-| `skipLocalhost` | `Boolean` | Boolean for skipping logging of localhost url or not  |
+| Option          | Type      | Description                                                  |
+|-----------------|-----------|--------------------------------------------------------------|
+| `dbConnect`     | `String`  | The string value for your mongodb database connection        |
+| `skipLocalhost` | `Boolean` | Boolean for skipping logging of localhost url or not         |
+| `skipAssets`    | `Boolean` | Boolean for skipping logging of assets like `.js` and `.css` |
