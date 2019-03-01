@@ -1,5 +1,7 @@
 # viewgle
 
+### Currenty we are only supporting server side render. There are plans to add a vue and react plugin that will capture client side rendered pages.
+
 A small analytics platform for express and mongo to leverage server side rendering.
 
 ## Usage
@@ -20,8 +22,6 @@ app.use(
   })
 );
 ```
-
-## Currenty we are only supportinf server side render. There are plans to add a vue and react plugin that will capture client side rendered pages.
 
 ## Available options:
 
