@@ -1,8 +1,9 @@
 # viewgle
 
-### Currenty we are only supporting server side render. There are plans to add a vue and react plugin that will capture client side rendered pages.
+A small analytics platform for express and mongo to leverage server side rendering. If you want to add viewgle to your client side application see our plugins:
 
-A small analytics platform for express and mongo to leverage server side rendering.
+1. Vue: [viewgle-vue](https://www.npmjs.com/package/viewgle-vue)
+2. React: Coming soon...
 
 ## Usage
 
